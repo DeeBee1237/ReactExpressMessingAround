@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 
 function ChatComponent(props) {
 
   const [messages, setMessages] = useState([]);
 
-  // this.state = {
-  //   name: props.name
-  // };
-
+  // the user name for the chat
+  const { name } = useParams();
+ 
   useEffect(() => {
 
     fetch('/getMessages')
@@ -41,7 +41,7 @@ function ChatComponent(props) {
 
   return (
     <div>
-      <p>Chat Component </p>
+      <p>Chat User : {name} </p>
 
       {
         <div class="chat">

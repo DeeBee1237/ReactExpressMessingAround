@@ -3,25 +3,37 @@ import { Link } from "react-router-dom";
 
 function JoinChat() {
 
-function joinChat(chatName) {
-  // TODO: https://stackoverflow.com/questions/37295377/how-to-navigate-from-one-page-to-another-in-react-js
-    console.log("chatName:", chatName)
+  // TODO: should the default be different here ?
+  const [userName, setUserName] = useState("")
 
+function search(formData) {
+  const name = formData.get("userName");
+  setUserName(name)
 }
 
   return (
     <div>
+
       <p>Join Chat Room</p>
 
-      <form action={joinChat}></form>
+        {userName === "" ? (
+           <p> Enter Your Name </p>
+        ) : (
+          <p>Hello {userName}</p>
+        )}
 
-      <p> Enter Your Name</p>
-      <form action={joinChat}>
-        <input name="joinChat" />
-        {/* <button type="submit">Join</button> */}
-        <Link to="/joinChat">Join</Link>
-        {/* <Link to={{pathName: "/joinChat"}}>Join</Link> */}
+      <form action={search}>
+        <input name="userName" />
+        <button type="submit">Set Username</button>
       </form>
+
+
+      {userName === "" ? (
+          <p>You need a user name to join the chat</p>
+        ) : (
+          <Link to={`/joinChat/${userName}`}>Join The Chat</Link>
+        )}
+        
     </div>
   );
 }

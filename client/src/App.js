@@ -76,10 +76,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<JoinChat />} />
-            <Route path="/joinChat" element={<ChatComponent />}>
-
-            {/* <Route path='/joinChat' render={(props) => <ChatComponent {...props} />} /> */}
-
+            <Route path="/joinChat/:name" element={<ChatComponent />}>
             </Route>
           </Routes>
         </BrowserRouter>
