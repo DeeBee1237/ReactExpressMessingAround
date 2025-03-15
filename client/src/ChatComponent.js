@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-function ChatComponent() {
+function ChatComponent(props) {
+
   const [messages, setMessages] = useState([]);
 
+  // this.state = {
+  //   name: props.name
+  // };
 
   useEffect(() => {
 
@@ -37,7 +41,7 @@ function ChatComponent() {
 
   return (
     <div>
-      <p>Chat Component</p>
+      <p>Chat Component </p>
 
       {
         <div class="chat">
@@ -48,7 +52,7 @@ function ChatComponent() {
         {messages.map((message, i) => (
           <div data-time="16:35" class="msg rcvd">{message}</div>
         ))}
-        </div> 
+        </div>
       }
 
       <form action={search}>

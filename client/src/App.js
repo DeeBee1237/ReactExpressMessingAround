@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import ChatComponent from './ChatComponent'
+import JoinChat from './JoinChat'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 function App() {
 
@@ -69,7 +72,17 @@ function App() {
   return (
     <div>
 
-        <ChatComponent />
+        
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<JoinChat />} />
+            <Route path="/joinChat" element={<ChatComponent />}>
+
+            {/* <Route path='/joinChat' render={(props) => <ChatComponent {...props} />} /> */}
+
+            </Route>
+          </Routes>
+        </BrowserRouter>
 
         {/* <input
           type="text"
