@@ -1,12 +1,10 @@
 const express = require("express");
 const app = express();
 
+// middleware
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// middleware
-// app.use(express.json())
 
 let messages = [];
 
@@ -33,8 +31,11 @@ app.get("/weatherInCity/:cityName", (req, res) => {
 });
 
 app.post("/postNewMessage", function (req, res) {
+  
   let message = req.body.message;
-  messages.push(message);
+  let userName = req.body.userName;
+
+  messages.push({'userName': userName, 'message' : message});
   console.log(messages);
 
   res.setHeader('Content-Type', 'application/json');

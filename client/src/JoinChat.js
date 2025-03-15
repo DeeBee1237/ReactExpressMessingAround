@@ -11,6 +11,7 @@ function search(formData) {
   setUserName(name)
 }
 
+  // TODO: CHECK FOR USERNAME ALREADY EXISTS CANNOT HAVE DUPLICATES
   return (
     <div>
 

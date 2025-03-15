@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 
 function ChatComponent(props) {
 
-  const [messages, setMessages] = useState([]);
+  const [messagesSent, setMessagesSent] = useState([]);
+  const [messagesRcvd, setMessagesRcvd] = useState([]);
 
   // the user name for the chat
   const { name } = useParams();
@@ -13,10 +14,22 @@ function ChatComponent(props) {
     fetch('/getMessages')
       .then(res => res.json())
       .then(data => {
-        setMessages(data.messages)
+        
+        // TODO: this relies on users without duplicate names CHECK FOR THIS!
+        let sentMessageObjs = data.messages.filter((messageObj) => messageObj.userName === name)
+        let sentMessages = sentMessageObjs.map((messageObj) => messageObj.message)
+
+        let rcvdMessageObjs = data.messages.filter((messageObj) => messageObj.userName !== name)
+        let rcvdMessages = rcvdMessageObjs.map((messageObj) => messageObj.message)
+        
+        // .map((messageObj) => messageObj.message)
+        // let actualMessages2 = data.messages.map((messageObj) => messageObj.message)
+        
+        setMessagesSent(sentMessages)
+        setMessagesRcvd(rcvdMessages)
       })
 
-  }, [messages])
+  }, [messagesSent])
 
   function search(formData) {
     const message = formData.get("newChatMessage");
@@ -28,6 +41,7 @@ function ChatComponent(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userName: name,
         message: message,
       }),
     })
@@ -35,7 +49,19 @@ function ChatComponent(props) {
         result.json()
       )
       .then((data) => {
-        setMessages(data.messages);
+        // let actualMessages = data.messages.map((messageObj) => messageObj.message)
+        // setMessages(actualMessages);
+        let sentMessageObjs = data.messages.filter((messageObj) => messageObj.userName === name)
+        let sentMessages = sentMessageObjs.map((messageObj) => messageObj.message)
+
+        let rcvdMessageObjs = data.messages.filter((messageObj) => messageObj.userName !== name)
+        let rcvdMessages = rcvdMessageObjs.map((messageObj) => messageObj.message)
+        
+        // .map((messageObj) => messageObj.message)
+        // let actualMessages2 = data.messages.map((messageObj) => messageObj.message)
+        
+        setMessagesSent(sentMessages)
+        setMessagesRcvd(rcvdMessages)
       });
   }
 
@@ -45,11 +71,11 @@ function ChatComponent(props) {
 
       {
         <div class="chat">
-         {messages.map((message, i) => (
+         {messagesSent.map((message, i) => (
           <div data-time="16:35" class="msg sent">{message}</div>
         ))}
 
-        {messages.map((message, i) => (
+        {messagesRcvd.map((message, i) => (
           <div data-time="16:35" class="msg rcvd">{message}</div>
         ))}
         </div>
