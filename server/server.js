@@ -35,12 +35,26 @@ app.post("/postNewMessage", function (req, res) {
   let message = req.body.message;
   let userName = req.body.userName;
 
-  messages.push({'userName': userName, 'message' : message});
+  let id = messages.length + 1
+  messages.push({'id' : id, 'userName': userName, 'message' : message});
   console.log(messages);
 
   res.setHeader('Content-Type', 'application/json');
   res.json({ 'messages': messages });
 });
+
+app.delete("/deleteMessage/:id", function (req, res) {
+
+  let idToDelete = req.params.id;
+  console.log('idToDelete = ', idToDelete)
+
+  let filteredMessages = messages.filter((message) => message.id != idToDelete)
+
+  console.log('filteredMessages = ', filteredMessages)
+
+  messages = filteredMessages
+  res.json({'messages' : messages})
+})
 
 app.get("/getMessages", function (req, res) {
   res.json({ 'messages': messages });
