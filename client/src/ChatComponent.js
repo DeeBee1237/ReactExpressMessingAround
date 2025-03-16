@@ -64,10 +64,11 @@ function ChatComponent(props) {
 
         {allMessages.map((messageObj, i) => (
             // <div data-time="16:35" class={messageObj.userName === name ? "msg sent" : "msg rcvd"}>{messageObj.message}</div>
-
           <div>
             <div data-time="16:35" class={messageObj.userName === name ? "msg sent" : "msg rcvd"}>{messageObj.message}</div>
-            <button onClick={() => deleteMessage(messageObj.id)}>Delete</button>
+            {(messageObj.userName == name) ? 
+            (<button onClick={() => deleteMessage(messageObj.id)}>Delete</button>) : 
+            (<></>)}
           </div>
         ))}
         
